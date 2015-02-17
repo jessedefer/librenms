@@ -47,9 +47,9 @@ function load_graph_definitions($logarithmic = false, $tinylegend = false) {
 
 	$GraphDefs = array();
 	$GraphDefs['apache_bytes'] = array(
-		'DEF:min_raw={file}:count:MIN',
-		'DEF:avg_raw={file}:count:AVERAGE',
-		'DEF:max_raw={file}:count:MAX',
+		'DEF:min_raw={file}:value:MIN',
+		'DEF:avg_raw={file}:value:AVERAGE',
+		'DEF:max_raw={file}:value:MAX',
 		'CDEF:min=min_raw,8,*',
 		'CDEF:avg=avg_raw,8,*',
 		'CDEF:max=max_raw,8,*',
@@ -67,9 +67,9 @@ function load_graph_definitions($logarithmic = false, $tinylegend = false) {
 		'GPRINT:min:MIN:%5.1lf%s\l',
 		'GPRINT:avg_sum:LAST:           (ca. %5.1lf%sB Total)');
 	$GraphDefs['apache_requests'] = array(
-		'DEF:min={file}:count:MIN',
-		'DEF:avg={file}:count:AVERAGE',
-		'DEF:max={file}:count:MAX',
+		'DEF:min={file}:value:MIN',
+		'DEF:avg={file}:value:AVERAGE',
+		'DEF:max={file}:value:MAX',
                 'COMMENT:           Cur     Avg      Min     Max\l',
 		"AREA:max#$HalfBlue",
 		"AREA:min#$Canvas",
@@ -79,9 +79,9 @@ function load_graph_definitions($logarithmic = false, $tinylegend = false) {
 		'GPRINT:min:MIN:%5.2lf%s',
 		'GPRINT:max:MAX:%5.2lf%s\l');
 	$GraphDefs['apache_scoreboard'] = array(
-		'DEF:min={file}:count:MIN',
-		'DEF:avg={file}:count:AVERAGE',
-		'DEF:max={file}:count:MAX',
+		'DEF:min={file}:value:MIN',
+		'DEF:avg={file}:value:AVERAGE',
+		'DEF:max={file}:value:MAX',
                 'COMMENT:           Cur     Min      Ave     Max\l',
 		"AREA:max#$HalfBlue",
 		"AREA:min#$Canvas",
@@ -397,9 +397,9 @@ function load_graph_definitions($logarithmic = false, $tinylegend = false) {
 		'GPRINT:avg:LAST:%4.1lf\l');
 	$GraphDefs['entropy'] = array(
 		#'-v', 'Bits',
-		'DEF:avg={file}:entropy:AVERAGE',
-		'DEF:min={file}:entropy:MIN',
-		'DEF:max={file}:entropy:MAX',
+		'DEF:avg={file}:value:AVERAGE',
+		'DEF:min={file}:value:MIN',
+		'DEF:max={file}:value:MAX',
 		'COMMENT:         Min       Avg       Max       Cur\l',
 		"AREA:max#$HalfBlue",
 		"AREA:min#$Canvas",
@@ -422,9 +422,9 @@ function load_graph_definitions($logarithmic = false, $tinylegend = false) {
 		'GPRINT:avg:LAST:%4.1lf\l');
 	$GraphDefs['frequency'] = array(
 		#'-v', 'Hertz',
-		'DEF:avg={file}:frequency:AVERAGE',
-		'DEF:min={file}:frequency:MIN',
-		'DEF:max={file}:frequency:MAX',
+		'DEF:avg={file}:value:AVERAGE',
+		'DEF:min={file}:value:MIN',
+		'DEF:max={file}:value:MAX',
 		"AREA:max#b5b5b5",
 		"AREA:min#$Canvas",
 		"LINE1:avg#$FullBlue:Frequency [Hz]",
@@ -1093,9 +1093,9 @@ function load_graph_definitions($logarithmic = false, $tinylegend = false) {
 		'GPRINT:max:MAX:%5.1lf%%',
 		'GPRINT:avg:LAST:%5.1lf%%\l');
 	$GraphDefs['ping'] = array(
-		'DEF:ping_avg={file}:ping:AVERAGE',
-		'DEF:ping_min={file}:ping:MIN',
-		'DEF:ping_max={file}:ping:MAX',
+		'DEF:ping_avg={file}:value:AVERAGE',
+		'DEF:ping_min={file}:value:MIN',
+		'DEF:ping_max={file}:value:MAX',
 		"AREA:ping_max#$HalfBlue",
 		"AREA:ping_min#$Canvas",
 		"LINE1:ping_avg#$FullBlue:Ping",
@@ -1384,9 +1384,9 @@ function load_graph_definitions($logarithmic = false, $tinylegend = false) {
 		'GPRINT:max:MAX:%5.1lf%s',
 		'GPRINT:avg:LAST:%5.1lf%s\l');
 	$GraphDefs['time_offset'] = array( # NTPd
-		'DEF:s_avg={file}:seconds:AVERAGE',
-		'DEF:s_min={file}:seconds:MIN',
-		'DEF:s_max={file}:seconds:MAX',
+		'DEF:s_avg={file}:value:AVERAGE',
+		'DEF:s_min={file}:value:MIN',
+		'DEF:s_max={file}:value:MAX',
 		'COMMENT:Offset     Min       Avg      Max      Cur\l',
 		"AREA:s_max#$HalfBlue",
 		"AREA:s_min#$Canvas",
@@ -2043,7 +2043,7 @@ function meta_graph_apache_scoreboard($host, $plugin, $plugin_instance, $type, $
 		if ($file == '')
 			continue;
 
-		$sources[] = array('name'=>$inst, 'file'=>$file, 'ds'=>'count');
+		$sources[] = array('name'=>$inst, 'file'=>$file, 'ds'=>'value');
 	}
 
 	return collectd_draw_meta_stack($opts, $sources);
